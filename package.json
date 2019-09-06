@@ -4,12 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "clean": "rm -rf node_modules build coverage",
+    "clean": "rm -rf build coverage",
     "start": "node build/src/app.js",
     "build": "tsc",
     "prebuild": "rm -rf build",
     "test": "jest --config ./jest.config.json",
-    "pretest": "npm run build",
     "e2e": "./rune2e.sh",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config ./jest.config.json",
     "pretest:debug": "npm run build"

@@ -3,6 +3,7 @@
   "coverageDirectory": "coverage",
   "testEnvironment": "node",
   "testMatch": [
-    "**/?(*.)+(spec|test).js"
-  ]
+    "**/?(*.)+(spec|test).ts"
+  ],
+  "preset": "ts-jest"
 }
