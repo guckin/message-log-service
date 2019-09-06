@@ -1,4 +1,4 @@
-import healthCheck from '../../../src/routes/healthCheck';
+import healthCheck from '../../../src/routes/healthCheck.routes';
 import {Handler, Response, Request, Router} from 'express';
 import {RequestMock, ResponseMock, RouterMock} from '../../mocks/express.mock';
 

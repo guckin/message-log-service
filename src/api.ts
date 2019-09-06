@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import healthCheck from './routes/healthCheck';
+import healthCheck from './routes/healthCheck.routes';
 
 export default () => {
     const api = Router();
