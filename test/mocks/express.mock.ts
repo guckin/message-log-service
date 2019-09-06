@@ -7,6 +7,7 @@ export class RouterMock {
 export class ResponseMock {
     status = mockThatReturnsThis();
     send = mockThatReturnsThis();
+    redirect = mockThatReturnsThis();
 }
 
 export class RequestMock {

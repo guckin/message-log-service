@@ -7,6 +7,7 @@ import * as bodyParser from 'body-parser';
 import initializeDb from './db';
 import config from './config';
 import api from './api';
+import root from './root';
 
 const app = express();
 const server = http.createServer(app);
@@ -21,6 +22,7 @@ app.use(bodyParser.json({
 
 initializeDb( () => {
     app.use('/api', api());
+    app.use('/', root());
     server.listen(config.port);
 });
 
