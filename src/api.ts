@@ -1,8 +1,8 @@
 import {Router} from 'express';
-import healhCheck from './routes/healthCheck';
+import healthCheck from './routes/healthCheck';
 
 export default () => {
     const api = Router();
-    healhCheck(api);
+    healthCheck(api);
     return api;
 };
