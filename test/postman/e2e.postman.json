@@ -1,0 +1,28 @@
+{
+	"info": {
+		"_postman_id": "8960325c-feeb-4a4f-bc3d-9541c2c2f42a",
+		"name": "Messaging-log-service ",
+		"description": "https://github.com/guckin/message-log-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/healthCheck",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"healthCheck"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
