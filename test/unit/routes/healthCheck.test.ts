@@ -22,17 +22,17 @@ describe('/healthCheck', () => {
 
     it('Its body contains a health status', () => {
         registerHealthCheck();
-        expectResponseBodyToEqual(200);
+        expectResponseBodyToEqual({healthCheck: 'OK'});
     });
 
     function registerHealthCheck() {
         healthCheck(mockRouter);
     }
 
-    function expectResponseBodyToEqual(number: number) {
+    function expectResponseBodyToEqual(body: object) {
         const handlerFunction = getRouteHandlerFor('get', '/healthCheck');
         handlerFunction(req, res, null);
-        expect(res.send).toBeCalledWith({healthCheck: 'OK'});
+        expect(res.send).toBeCalledWith(body);
     }
 
     function getRouteHandlerFor(verb: string, route: string): Handler {
