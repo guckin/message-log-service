@@ -7,7 +7,10 @@ import {Message} from '../../src/models/message';
 describe(DataStoreService, () => {
 
     let dataStoreService: DataStoreService;
-    const dataStore = new Datastore({apiEndpoint: 'https://localhost:8081'});
+    const dataStore = new Datastore({
+        projectId: 'project-test',
+        apiEndpoint: 'https://localhost:8081'
+    });
 
     beforeEach(() => {
         dataStoreService = new DataStoreService(dataStore);
