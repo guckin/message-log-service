@@ -23,11 +23,11 @@ jobs:
         env:
           CI: true
       - name: Integration tests
-          run: |
-            docker-compose up -d
-            ./waitForEmulator.sh
-            npm run test:integration
-            docker-compose down
+        run: |
+          docker-compose up -d
+          ./waitForEmulator.sh
+          npm run test:integration
+          docker-compose down
       - uses: actions/gcloud/auth@master
         env:
           GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
