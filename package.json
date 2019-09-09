@@ -12,7 +12,7 @@
     "test:watch": "npm run test -- --watchAll --coverage",
     "e2e": "./rune2e.sh",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config ./jest.config.json",
-    "test:integration": "./integrationRun.sh"
+    "test:integration": "jest --config ./jest.integration.json"
   },
   "author": "Stephen McGuckin",
   "license": "ISC",

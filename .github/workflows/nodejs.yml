@@ -16,9 +16,15 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
-    - name: npm install, build, and test
+    - name: Unit tests
       run: |
         npm install
         npm test
       env:
         CI: true
+    - name: Integration tests
+      run: |
+        docker-compose up -d
+        ./waitForEmulator.sh
+        npm run test:integration
+        docker-compose down
