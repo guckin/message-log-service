@@ -33,7 +33,7 @@ jobs:
           GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
       - uses: actions/gcloud/cli@master
         with:
-          args: app deploy
+          args: app deploy --version slippers
         env:
           GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
           CLOUDSDK_CORE_PROJECT: ${{ secrets.PROJECT_NAME }}
