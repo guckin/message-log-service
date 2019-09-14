@@ -15,10 +15,21 @@ describe(GCloudDataStoreService, () => {
 
     it('gets an item from the data store', async () => {
         setDataStoreReturnValue({some: 'data'});
-        const data = await dataStoreService.getItem(['Room', 'MyRoom', 'Message', 1]);
-        expectKeyPassedToBe(['Room', 'MyRoom', 'Message', 1]);
+        const key = ['foo', 'bar'];
+
+        const data = await dataStoreService.getItem(key);
+        expectKeyPassedToBe(key);
 
         expect(data).toEqual({some: 'data'});
+    });
+
+    it('stores an item in the data store', async () => {
+        const key = ['foo', 'bar'];
+        const item = {baz: 'quz'};
+        await dataStoreService.storeItem(key, item);
+        expectKeyPassedToBe(key);
+
+        expectDataStoredToBe(item);
     });
 
 
@@ -34,7 +45,7 @@ describe(GCloudDataStoreService, () => {
         object[method] = jest.fn().mockReturnValue(value);
     }
 
-    function replaceObjectMethodWithMock(object: any, method: string) {
-        object[method] = jest.fn();
+    function expectDataStoredToBe(data: any) {
+        expect(dataStore.save).toBeCalledWith({key: undefined, data});
     }
 });

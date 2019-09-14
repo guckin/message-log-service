@@ -14,6 +14,11 @@ export class GCloudDataStoreService implements DataPersistence {
         return await this.gcloudDataStore.get(key);
     }
 
+    async storeItem(itemKey: Key, item: any) {
+        const key = this.keyToGcloudKey(itemKey);
+        return await this.gcloudDataStore.save({key, data: item});
+    }
+
     private keyToGcloudKey(itemKey: Key): entity.Key {
         const path = this.keyToGcloudPath(itemKey);
         return this.gcloudDataStore.key(path);
