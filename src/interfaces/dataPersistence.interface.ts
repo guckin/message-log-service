@@ -1,5 +1,5 @@
 import {Key} from './key.interface';
 
 export interface DataPersistence {
-    getItem<T>(itemKey: Key<T>): Promise<T>;
+    getItem(itemKey: Key): Promise<any>;
 }

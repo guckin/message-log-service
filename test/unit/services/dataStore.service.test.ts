@@ -1,50 +1,40 @@
-import {DataStoreService} from '../../../src/services/dataStore.service';
-import {Message} from '../../../src/models/message';
-import {Room} from '../../../src/models/room';
-import {Datastore} from '@google-cloud/datastore';
-import {DataStoreMock} from '../../mocks/dataStore.mock';
+import {GCloudDataStoreService} from '../../../src/services/dataStore.service';
+import {Datastore, PathType} from '@google-cloud/datastore';
+jest.mock('@google-cloud/datastore');
 
-describe(DataStoreService, () => {
+describe(GCloudDataStoreService, () => {
 
-    let dataStoreService: DataStoreService;
-    let dataStoreMock: Datastore;
+    let dataStoreService: GCloudDataStoreService;
+    let dataStore: Datastore;
 
     beforeEach(() => {
-        dataStoreMock = new DataStoreMock() as any;
-        dataStoreService = new DataStoreService(dataStoreMock);
-        (dataStoreMock as any).returnGetValue = [{
-            content: 'content',
-            author: 'author',
-            date: 'date'
-        }];
+        dataStore = new Datastore();
+        dataStoreService = new GCloudDataStoreService(dataStore);
     });
 
-    it('creates Paths', async () => {
-        const key = {
-            Item: Message,
-            id: 123
-        };
 
-        await dataStoreService.getItem(key);
+    it('gets an item from the data store', async () => {
+        setDataStoreReturnValue({some: 'data'});
+        const data = await dataStoreService.getItem(['Room', 'MyRoom', 'Message', 1]);
+        expectKeyPassedToBe(['Room', 'MyRoom', 'Message', 1]);
 
-        expect(dataStoreMock.key).toBeCalledWith(
-            ['Message', 123]
-        );
+        expect(data).toEqual({some: 'data'});
     });
 
-    it('creates Paths based on parent keys', async () => {
-        const key = {
-            parent: {
-                Item: Room,
-                id: 'test'
-            },
-            Item: Message,
-            id: 123
-        };
-        await dataStoreService.getItem(key);
 
-        expect(dataStoreMock.key).toBeCalledWith(
-            ['Room', 'test', 'Message', 123]
-        );
-    });
+    function setDataStoreReturnValue(value: any) {
+        replaceObjectMethodReturnValue(dataStore, 'get', value);
+    }
+
+    function expectKeyPassedToBe(key: PathType[]) {
+        expect(dataStore.key).toBeCalledWith(key);
+    }
+
+    function replaceObjectMethodReturnValue(object: any, method: string, value: any) {
+        object[method] = jest.fn().mockReturnValue(value);
+    }
+
+    function replaceObjectMethodWithMock(object: any, method: string) {
+        object[method] = jest.fn();
+    }
 });
