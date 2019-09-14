@@ -1,8 +1,11 @@
-export class Room {
+import {Item} from './item';
+
+export class Room implements Item {
 
     name: string;
+    id: string = this.name;
 
-    constructor(roomData: Room) {
-        this.name = roomData.name;
+    constructor(name: string) {
+        this.name = name;
     }
 }
