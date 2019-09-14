@@ -2,6 +2,7 @@ import {Datastore, PathType} from '@google-cloud/datastore';
 import {entity} from '@google-cloud/datastore/build/src/entity';
 import {DataPersistence} from '../interfaces/dataPersistence.interface';
 import {Key} from '../interfaces/key.interface';
+import {Item} from '../models/item';
 
 export class GCloudDataStoreService implements DataPersistence {
 
@@ -9,9 +10,11 @@ export class GCloudDataStoreService implements DataPersistence {
         private readonly gcloudDataStore: Datastore
     ) {}
 
-    async getItem(itemKey: Key): Promise<any> {
+    async getItem<T>(itemKey: Key): Promise<Item> {
         const key = this.keyToGcloudKey(itemKey);
-        return await this.gcloudDataStore.get(key);
+        const response = await this.gcloudDataStore.get(key);
+        const item = response[0];
+        return {data: JSON.parse(JSON.stringify(item)), key: key.path};
     }
 
     async storeItem(itemKey: Key, item: any) {

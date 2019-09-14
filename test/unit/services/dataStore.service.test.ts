@@ -1,5 +1,6 @@
 import {GCloudDataStoreService} from '../../../src/services/dataStore.service';
 import {Datastore, PathType} from '@google-cloud/datastore';
+import {Key} from '../../../src/interfaces/key.interface';
 jest.mock('@google-cloud/datastore');
 
 describe(GCloudDataStoreService, () => {
@@ -14,13 +15,13 @@ describe(GCloudDataStoreService, () => {
 
 
     it('gets an item from the data store', async () => {
-        setDataStoreReturnValue({some: 'data'});
+        setDataStoreReturnValue([{some: 'data'}]);
         const key = ['foo', 'bar'];
-
-        const data = await dataStoreService.getItem(key);
+        setKey(key);
+        await dataStoreService.getItem(key);
         expectKeyPassedToBe(key);
 
-        expect(data).toEqual({some: 'data'});
+        expect(dataStore.get).toHaveBeenCalled();
     });
 
     it('stores an item in the data store', async () => {
@@ -47,5 +48,9 @@ describe(GCloudDataStoreService, () => {
 
     function expectDataStoredToBe(data: any) {
         expect(dataStore.save).toBeCalledWith({key: undefined, data});
+    }
+
+    function setKey(key: Key) {
+        replaceObjectMethodReturnValue(dataStore, 'key', {path: key});
     }
 });

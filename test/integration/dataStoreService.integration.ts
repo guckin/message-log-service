@@ -1,19 +1,17 @@
-import {DataStoreService} from '../../src/services/dataStore.service';
+import {GCloudDataStoreService} from '../../src/services/dataStore.service';
 import {Datastore, PathType} from '@google-cloud/datastore';
-import {Room} from '../../src/models/room';
-import {Message} from '../../src/models/message';
 
 
-describe(DataStoreService, () => {
+describe(GCloudDataStoreService, () => {
 
-    let dataStoreService: DataStoreService;
+    let dataStoreService: GCloudDataStoreService;
     const dataStore = new Datastore({
         projectId: 'project-test',
         apiEndpoint: 'https://localhost:8081'
     });
 
     beforeEach(() => {
-        dataStoreService = new DataStoreService(dataStore);
+        dataStoreService = new GCloudDataStoreService(dataStore);
     });
 
 
@@ -25,16 +23,16 @@ describe(DataStoreService, () => {
                author: 'author',
                date: 'date'
            }
-       );
-        const key = {
-            Item: Message,
-            id: '123'
-        };
+        );
+        const key = ['Message', '123'];
         const item = await dataStoreService.getItem(key);
         expect(item).toEqual({
-            content: 'content',
-            author: 'author',
-            date: 'date'
+            data: {
+                content: 'content',
+                author: 'author',
+                date: 'date'
+            },
+            key: ['Message', '123']
         });
     });
 
@@ -47,23 +45,18 @@ describe(DataStoreService, () => {
                 date: 'this time'
             }
         );
-        const key = {
-            parent: {
-                Item: Room,
-                id: 'foo'
-            },
-            Item: Message,
-            id: 123
-        };
+        const key = ['Room', 'foo', 'Message', 123];
         const item = await dataStoreService.getItem(key);
         expect(item).toEqual({
-            content: 'something',
-            author: 'different',
-            date: 'this time'
+            data: {
+                content: 'something',
+                author: 'different',
+                date: 'this time'},
+            key: ['Room', 'foo', 'Message', 123]
         });
     });
 
-    async function saveMessageDirectlyToDataStore(keyPath: PathType[], message: Message) {
+    async function saveMessageDirectlyToDataStore(keyPath: PathType[], message: any) {
         const saveKey = dataStore.key(keyPath);
         await dataStore.save({
             key: saveKey,
