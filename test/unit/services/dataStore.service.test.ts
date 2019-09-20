@@ -28,8 +28,8 @@ describe(GCloudDataStoreService, () => {
         const key = ['foo', 'bar'];
         const item = {baz: 'quz'};
         await dataStoreService.storeItem(key, item);
-        expectKeyPassedToBe(key);
 
+        expectKeyPassedToBe(key);
         expectDataStoredToBe(item);
     });
 

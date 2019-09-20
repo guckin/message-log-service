@@ -1,6 +1,6 @@
 import {Key} from '../interfaces/key.interface';
 
-export interface Item {
-    data: any;
+export interface ItemRecord<T> {
+    data: T;
     key: Key;
 }

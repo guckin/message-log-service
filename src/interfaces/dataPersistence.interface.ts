@@ -1,5 +1,7 @@
 import {Key} from './key.interface';
+import {ItemRecord} from '../models/itemRecord';
 
 export interface DataPersistence {
-    getItem(itemKey: Key): Promise<any>;
+    getItem<T>(itemKey: Key): Promise<ItemRecord<T>>;
+    storeItem<T>(itemKey: Key, item: T): Promise<void>;
 }
